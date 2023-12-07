@@ -21,8 +21,9 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
+
 jobs:
-  # Single deploy job since we're just deploying
+  # デプロイするだけなので、単一のデプロイジョブ
   deploy:
     environment:
       name: github-pages
@@ -49,4 +50,4 @@ jobs:
           path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v2
