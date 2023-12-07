@@ -1,9 +1,28 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { Button, Input } from "antd";
+import "../App.css";
+import useConfirmation from "../hooks/useConfirmation";
+import useGpt from "../hooks/useGpt";
 
 const Verifier = () => {
-  const [backgroundPrompt, setBackGroundPrompt] = useState("");
-  const [mainPrompt, setMainPrompt] = useState("");
-  const [result, setResult] = useState("");
+  const { TextArea } = Input;
+
+  const { confirm } = useConfirmation();
+
+  const {
+    backgroundPrompt,
+    setBackGroundPrompt,
+    mainPrompt,
+    setMainPrompt,
+    result,
+    veryfyGpt,
+    error,
+    loading,
+  } = useGpt();
+
+  useEffect(() => {
+    confirm();
+  });
 
   const updateBackgroundPrompt = (e) => {
     setBackGroundPrompt(e.target.value);
@@ -14,31 +33,40 @@ const Verifier = () => {
   };
 
   const getResult = () => {
-    setResult("結果です");
+    veryfyGpt();
   };
 
   return (
     <>
-      <div>前提のプロンプト</div>
-      <textarea
-        value={backgroundPrompt}
-        onChange={updateBackgroundPrompt}
-        cols="30"
-        rows="10"
-      />
-      <div>ユーザの入力</div>
-      <textarea
-        value={mainPrompt}
-        onChange={updateMainPrompt}
-        cols="30"
-        rows="10"
-      />
+      <div className="flex sgap">
+        <div className="left">
+          <div>前提のプロンプト</div>
+          <TextArea
+            value={backgroundPrompt}
+            onChange={updateBackgroundPrompt}
+            cols="40"
+            rows="10"
+          />
+        </div>
+        <div className="right">
+          <div>ユーザの入力</div>
+          <TextArea
+            value={mainPrompt}
+            onChange={updateMainPrompt}
+            cols="40"
+            rows="10"
+          />
+        </div>
+      </div>
 
       <div className="request">
-        <button onClick={getResult}>検証</button>
+        <Button size="large" onClick={getResult} loading={loading}>
+          検証
+        </Button>
       </div>
       <div className="result">
         <div>{result}</div>
+        {error ? <div className="error">{error}</div> : null}
       </div>
     </>
   );

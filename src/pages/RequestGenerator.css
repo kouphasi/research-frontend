@@ -1,0 +1,13 @@
+.request-code-generator-wrapper {
+  display: flex;
+}
+.show-request-code {
+  color: white;
+  background-color: black;
+  border-radius: 6px;
+  padding: 10px;
+  white-space: pre-wrap;
+  text-align: left;
+  width: 100%;
+  word-break: break-all;
+}
